@@ -1,0 +1,46 @@
+# Define a dictionary for codon to amino acid translation
+genetic_code = {
+    "UUU": "Phe", "UUC": "Phe", "UUA": "Leu", "UUG": "Leu",
+    "UCU": "Ser", "UCC": "Ser", "UCA": "Ser", "UCG": "Ser",
+    "UAU": "Tyr", "UAC": "Tyr", "UAA": "STOP", "UAG": "STOP",
+    "UGU": "Cys", "UGC": "Cys", "UGA": "STOP", "UGG": "Trp",
+    "CUU": "Leu", "CUC": "Leu", "CUA": "Leu", "CUG": "Leu",
+    "CCU": "Pro", "CCC": "Pro", "CCA": "Pro", "CCG": "Pro",
+    "CAU": "His", "CAC": "His", "CAA": "Gln", "CAG": "Gln",
+    "CGU": "Arg", "CGC": "Arg", "CGA": "Arg", "CGG": "Arg",
+    "AUU": "Ile", "AUC": "Ile", "AUA": "Ile", "AUG": "Met",
+    "ACU": "Thr", "ACC": "Thr", "ACA": "Thr", "ACG": "Thr",
+    "AAU": "Asn", "AAC": "Asn", "AAA": "Lys", "AAG": "Lys",
+    "AGU": "Ser", "AGC": "Ser", "AGA": "Arg", "AGG": "Arg",
+    "GUU": "Val", "GUC": "Val", "GUA": "Val", "GUG": "Val",
+    "GCU": "Ala", "GCC": "Ala", "GCA": "Ala", "GCG": "Ala",
+    "GAU": "Asp", "GAC": "Asp", "GAA": "Glu", "GAG": "Glu",
+    "GGU": "Gly", "GGC": "Gly", "GGA": "Gly", "GGG": "Gly"
+}
+
+def dna_to_mrna(dna_sequence):
+    # Replace 'T' with 'U' to transcribe DNA to mRNA
+    return dna_sequence.replace('T', 'U')
+
+def translate_mrna_to_protein(mrna_sequence):
+    protein_sequence = ""
+    for i in range(0, len(mrna_sequence), 3):
+        codon = mrna_sequence[i:i+3]
+        amino_acid = genetic_code.get(codon, "X")  # 'X' for unknown codons
+        if amino_acid == "STOP":
+            break  # Stop translation at a stop codon
+        protein_sequence += amino_acid + " "
+    return protein_sequence.strip()
+
+# Input DNA sequence
+input_dna = "TTACGA"
+
+# Transcribe DNA to mRNA
+mrna = dna_to_mrna(input_dna)
+
+# Translate mRNA to protein
+protein = translate_mrna_to_protein(mrna)
+
+print("Input DNA Sequence:", input_dna)
+print("mRNA Sequence:", mrna)
+print("Amino Acid Sequence (Protein):", protein)
