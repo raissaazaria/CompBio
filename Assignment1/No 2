@@ -1,0 +1,59 @@
+#Dictionary representing the genetic code with amino acid abbreviations
+genetic_code = {
+     "UUU": "Phe (F)", "UUC": "Phe (F)", "UUA": "Leu (L)", "UUG": "Leu (L)",
+    "CUU": "Leu (L)", "CUC": "Leu (L)", "CUA": "Leu (L)", "CUG": "Leu (L)",
+    "AUU": "Ile (I)", "AUC": "Ile (I)", "AUA": "Ile (I)", "AUG": "Met (M)",
+    "GUU": "Val (V)", "GUC": "Val (V)", "GUA": "Val (V)", "GUG": "Val (V)",
+    "UCU": "Ser (S)", "UCC": "Ser (S)", "UCA": "Ser (S)", "UCG": "Ser (S)",
+    "CCU": "Pro (P)", "CCC": "Pro (P)", "CCA": "Pro (P)", "CCG": "Pro (P)",
+    "ACU": "Thr (T)", "ACC": "Thr (T)", "ACA": "Thr (T)", "ACG": "Thr (T)",
+    "GCU": "Ala (A)", "GCC": "Ala (A)", "GCA": "Ala (A)", "GCG": "Ala (A)",
+    "UAU": "Tyr (Y)", "UAC": "Tyr (Y)", "UAA": "Stop ()", "UAG": "Stop ()",
+    "CAU": "His (H)", "CAC": "His (H)", "CAA": "Gln (Q)", "CAG": "Gln (Q)",
+    "AAU": "Asn (N)", "AAC": "Asn (N)", "AAA": "Lys (K)", "AAG": "Lys (K)",
+    "GAU": "Asp (D)", "GAC": "Asp (D)", "GAA": "Glu (E)", "GAG": "Glu (E)",
+    "UGU": "Cys (C)", "UGC": "Cys (C)", "UGA": "Stop (*)", "UGG": "Trp (W)",
+    "CGU": "Arg (R)", "CGC": "Arg (R)", "CGA": "Arg (R)", "CGG": "Arg (R)",
+    "AGU": "Ser (S)", "AGC": "Ser (S)", "AGA": "Arg (R)", "AGG": "Arg (R)",
+    "GGU": "Gly (G)", "GGC": "Gly (G)", "GGA": "Gly (G)", "GGG": "Gly (G)"
+}
+
+#Function to translate amino acid sequence to mRNA using the genetic code
+def translate_amino_acid_sequence_to_mrna(amino_acid_sequence):
+    mrna_sequence = ""
+    for aa in amino_acid_sequence:
+        mrna_codons = [codon for codon, aminos in genetic_code.items() if aa in aminos]
+        if mrna_codons:
+            mrna_sequence += mrna_codons[0]  # Select the first codon for the amino acid
+        else:
+            print(f"Invalid amino acid: {aa}")
+            return None
+    return mrna_sequence
+
+#Function to count every 3 mRNA codons
+def count_mrna_codons(mrna_sequence):
+    codon_frequencies = {}
+    for i in range(0, len(mrna_sequence), 3):
+        codon = mrna_sequence[i:i+3]
+        if len(codon) == 3:
+            if codon not in codon_frequencies:
+                codon_frequencies[codon] = 1
+            else:
+                codon_frequencies[codon] += 1
+    return codon_frequencies
+
+#Get user input for amino acid sequence
+input_amino_acid_sequence = "NAN"
+
+#Translate amino acid sequence to mRNA using the genetic code
+mrna_sequence = translate_amino_acid_sequence_to_mrna(input_amino_acid_sequence)
+
+#Count every 3 mRNA codons
+if mrna_sequence:
+    codon_frequencies = count_mrna_codons(mrna_sequence)
+
+#Output mRNA sequence and codon frequencies
+    print("Input Aminoacid =", input_amino_acid_sequence)
+    print("mRNA =", mrna_sequence)
+    for codon, frequency in codon_frequencies.items():
+        print(codon, "=", frequency)
